@@ -1,7 +1,7 @@
 # Key Pair
 resource "aws_key_pair" "my_key_pair" {
-  key_name   = "terra-key"
-  public_key = file("terra-key.pub")
+  key_name   = "terraform-key"
+  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsJiyRtavPC1VsbLjPBTthjIr8QG+YJbsKEQRB4Ytbm ubuntu@ip-172-31-24-163"
 }
 
 # Default VPC
@@ -40,7 +40,7 @@ resource "aws_security_group" "my_sec_grp" {
 # EC2 Instance
 resource "aws_instance" "my_instance" {
   ami             = "ami-020cba7c55df1f615"
-  instance_type   = "t2.micro"
+  instance_type   = var.aws_instance_type
   key_name        = aws_key_pair.my_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.my_sec_grp.id]
 
