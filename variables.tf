@@ -4,6 +4,16 @@ variable "aws_instance_type" {
 }
 
 variable "aws_root_storage" {
-    default = 15
+    default = 10
     type = number
+}
+
+variable "aws_security_group" {
+  default  = "my_sec_grp"
+  type = string
+}
+
+variable "env" {
+  default = "prd"
+  type = string
 }

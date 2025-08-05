@@ -9,7 +9,7 @@ resource "aws_default_vpc" "default" {}
 
 # Security Group
 resource "aws_security_group" "my_sec_grp" {
-  name        = "my_sec_grp"
+  name        = var.aws_security_group
   description = "Custom sec grp for inbound and outbound traffic"
   vpc_id      = aws_default_vpc.default.id
 
@@ -39,17 +39,22 @@ resource "aws_security_group" "my_sec_grp" {
 
 # EC2 Instance
 resource "aws_instance" "my_instance" {
-  ami             = "ami-020cba7c55df1f615"
+  ami             = "ami-01f23391a59163da9"
   instance_type   = var.aws_instance_type
   key_name        = aws_key_pair.my_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.my_sec_grp.id]
 
   root_block_device {
     volume_type = "gp3"
-    volume_size = 15
+    volume_size = var.env =="prd" ? 20 : var.aws_root_storage
   }
 
   tags = {
     Name = "my_instance"
   }
 }
+
+resource "aws_instance" "new_instance"{
+      ami = "unknown"
+      instance_type = "unknown"  
+    }
